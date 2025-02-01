@@ -1,0 +1,33 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <engine:Template name="LogoHeader" src="project://database/Packages/com.oxblood.oxbloodtools/UI/LogoHeader.uxml?fileID=9197481963319205126&amp;guid=9cae6954be8cf1b42b4aa099ac889629&amp;type=3#LogoHeader" />
+    <Style src="project://database/Packages/com.oxblood.oxbloodtools/UI/OxbloodStyle.uss?fileID=7433441132597879392&amp;guid=b4bac1363fb393942a14d41495954ceb&amp;type=3#OxbloodStyle" />
+    <engine:Instance template="LogoHeader" name="LogoHeader" style="height: 64px;" />
+    <engine:VisualElement name="ToggleFeatures" style="flex-grow: 1;">
+        <engine:Toggle label="Teleport To Mouse" name="enableMoveToMouseToggle" value="true" tooltip="Press spacebar in the Scene view to teleport currently selected object to the mouse cursor" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+    </engine:VisualElement>
+    <engine:VisualElement name="SelectionFeatures" style="flex-grow: 1; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+        <engine:DropdownField label="Select by Layer" name="layerDropdown" class="label" style="opacity: 1; right: auto; flex-direction: row; max-height: none; flex-wrap: wrap-reverse; max-width: none; align-items: stretch; justify-content: space-evenly; align-self: auto; align-content: auto;">
+            <engine:Button text="Select" name="_selectObjectsByLayerButton" class="button" style="min-width: auto; width: 20%;" />
+        </engine:DropdownField>
+        <engine:DropdownField label="Select by Component" name="layerDropdown" class="label" style="opacity: 1; right: auto; flex-direction: row; max-height: none; flex-wrap: wrap-reverse; max-width: none; align-items: stretch; justify-content: space-evenly; align-self: auto; align-content: auto;">
+            <engine:Button text="Select" name="_selectObjectsByTypeButton" class="button" style="min-width: auto; width: 20%;" />
+        </engine:DropdownField>
+        <editor:TagField label="Select by Tag" value="Player" class="label" style="align-content: flex-start; align-self: auto; justify-content: flex-end;">
+            <engine:Button text="Select" class="button" style="width: 20%;" />
+        </editor:TagField>
+    </engine:VisualElement>
+    <engine:VisualElement name="StatsWindow" style="flex-grow: 1; background-color: rgb(51, 51, 51); max-width: 410%;">
+        <engine:Label text="Scene Stats" tooltip="The numbers calculated here are approximate to avoid potential crashes" class="label" style="font-size: 18px; -unity-font-definition: resource(&apos;RedHatDisplay-Bold&apos;);" />
+        <engine:Label text="0" name="_statTotalObjectCount" enable-rich-text="false" tooltip="All objects with an attached &apos;Transform&apos; are counted" class="label" style="-unity-text-align: middle-right; width: 40%;">
+            <engine:Label text="Total Objects:" style="-unity-text-align: middle-left;" />
+        </engine:Label>
+        <engine:Label text="0" name="_statTotalTriangleCount" class="label" style="-unity-text-align: middle-right; width: 40%;">
+            <engine:Label text="Total Triangles:" style="-unity-text-align: middle-left;" />
+        </engine:Label>
+        <engine:Label text="0" name="_statTotalVertexCount" class="label" style="-unity-text-align: middle-right; width: 40%;">
+            <engine:Label text="Total Vertices:" style="-unity-text-align: middle-left;" />
+        </engine:Label>
+        <engine:ProgressBar value="0" name="_statRefreshBar" style="max-width: none; width: 40%; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; height: auto; max-height: 2%; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgb(255, 0, 0); align-content: auto; align-items: stretch;" />
+        <engine:Button text="Refresh" name="_refreshStatsButton" class="button" style="width: 40%;" />
+    </engine:VisualElement>
+</engine:UXML>
