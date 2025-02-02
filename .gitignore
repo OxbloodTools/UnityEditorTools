@@ -69,4 +69,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Oxblood Uneeded assets
-/Res/AssetThumbs/
+/Res/AssetThumbs/*
