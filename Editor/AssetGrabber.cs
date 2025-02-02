@@ -9,9 +9,6 @@ namespace Oxblood.editor
 {
     public class AssetGrabber : Editor
     {
-        private const string TargetLabel = "OxbloodAsset";
-        private const string AssetLibraryDataPath = "Packages/com.oxblood.oxbloodtools/Res/LibraryData.txt";
-        public readonly string ThumbnailDirectoryPath = "Packages/com.oxblood.oxbloodtools/Res/AssetThumbs/";
         public List<string> oxbloodAssetGuids = new List<string>(); //I want this to be static, possible?
 
         //I discovered a huge amount of redundancy here as I realised serialisation etc is unnecessary because I can use the generated image files and names as links to prefabs with GUIDS, cunt.
@@ -19,7 +16,7 @@ namespace Oxblood.editor
         public void RebuildOxbloodAssetDatabase() //used when doing a complete rescan of the library.  Will wipe everything each time and start fresh - feels like this will be hefty no matter what
         {
             string currentScenePath = SceneManager.GetActiveScene().path; //so we can return to scene we started in after screenshots are done
-            string[] existingImgFiles = Directory.GetFiles(ThumbnailDirectoryPath);
+            string[] existingImgFiles = Directory.GetFiles(StaticPaths.OxbloodGeneratedData);
             foreach (string existingImgFile in existingImgFiles) File.Delete(existingImgFile);
 
             RefreshAssetLibraryGuids();
@@ -36,7 +33,7 @@ namespace Oxblood.editor
         public void RefreshAssetLibraryGuids() // re-scans the project for labelled assets then populate the main dictionary with Guids and names  DONT NEED NAMES FOOL!
         {
             oxbloodAssetGuids.Clear();
-            string[] guids = UnityEditor.AssetDatabase.FindAssets($"l:{TargetLabel}");
+            string[] guids = UnityEditor.AssetDatabase.FindAssets($"l:{StaticPaths.TargetLabel}");
             foreach (string guid in guids)
             {
                 oxbloodAssetGuids.Add(guid);
@@ -51,14 +48,14 @@ namespace Oxblood.editor
             database.guids = oxbloodAssetGuids.ToArray();
 
             string assetDatabaseAsString = JsonUtility.ToJson(database);
-            File.WriteAllText(AssetLibraryDataPath, assetDatabaseAsString);
+            File.WriteAllText(StaticPaths.AssetLibraryDataPath, assetDatabaseAsString);
         }
 
         private void LoadDatabaseInfo() // loads previously caluclated guids from disc
         {
-            if (File.Exists(AssetLibraryDataPath))
+            if (File.Exists(StaticPaths.AssetLibraryDataPath))
             {
-                string assetDatabaseAsString = File.ReadAllText(AssetLibraryDataPath);
+                string assetDatabaseAsString = File.ReadAllText(StaticPaths.AssetLibraryDataPath);
                 OxbloodAssetDatabase database = JsonUtility.FromJson<OxbloodAssetDatabase>(assetDatabaseAsString);
 
                 oxbloodAssetGuids.Clear();
@@ -86,7 +83,7 @@ namespace Oxblood.editor
 
         private void TakeObjectPicture(GameObject prefab, string guid)
         {
-            Scene scene = EditorSceneManager.OpenScene("Packages/com.oxblood.oxbloodtools/Res/PhotoStudio.unity", OpenSceneMode.Single);
+            Scene scene = EditorSceneManager.OpenScene(StaticPaths.PhotoScenePath, OpenSceneMode.Single);
             GameObject instance = PrefabUtility.InstantiatePrefab(prefab, scene) as GameObject;
 
             Bounds bounds = GetPrefabBounds(instance);
@@ -98,7 +95,7 @@ namespace Oxblood.editor
             screenshotCamera.orthographicSize = maxExtent * 1.2f;
 
 
-            string fullPath = ThumbnailDirectoryPath + guid + ".png";
+            string fullPath = StaticPaths.OxbloodGeneratedData + guid + ".png";
 
             RenderTexture rt = new RenderTexture(256, 256, 24, RenderTextureFormat.ARGB32);
             screenshotCamera.targetTexture = rt;

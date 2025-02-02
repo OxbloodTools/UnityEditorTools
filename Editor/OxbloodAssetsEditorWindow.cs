@@ -21,6 +21,8 @@ namespace Oxblood.editor
 
         private void OnEnable()
         {
+            InitialiseOxbloodTools.Initialise();
+            
             VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.oxblood.oxbloodtools/UI/OxbloodAssetsWindow.uxml");
             visualTree.CloneTree(rootVisualElement);
 
@@ -53,7 +55,7 @@ namespace Oxblood.editor
         {
             _imageContainer.Clear();
 
-            string[] imgGuids = AssetDatabase.FindAssets("t:Texture2D", new[] { _assetGrabber.ThumbnailDirectoryPath });
+            string[] imgGuids = AssetDatabase.FindAssets("t:Texture2D", new[] { StaticPaths.OxbloodGeneratedData });
 
             foreach (string imgGuid in imgGuids)
             {
