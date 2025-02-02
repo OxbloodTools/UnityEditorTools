@@ -3,13 +3,11 @@
   "displayName": "Oxblood Tools",
   "version": "0.1.0",
   "unity": "2022.3",
-  "description": "A series of editor extensions to help speed up workflow",
-  "keywords": [
-    "oxblood",
-	"tools",
-	"assets",
-	"browser"
-  ],
-  "category": "Tools",
-  
+  "description": "A series of editor extensions to help speed up workflow, etc",
+  "category": "",
+  "author": 
+	{
+		"name": "Nick Atherton",
+		"email": "exacerblast@gmail.com"
+	}
 }
