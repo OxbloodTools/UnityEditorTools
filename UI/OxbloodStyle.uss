@@ -9,9 +9,12 @@
     text-overflow: clip;
     -unity-font-definition: resource('RedHatDisplay-Bold');
     -unity-font-style: normal;
-    flex-grow: 1;
+    flex-grow: 0;
     -unity-background-image-tint-color: rgb(104, 26, 26);
     background-image: resource('T_UI_Button1');
+    -unity-background-scale-mode: stretch-to-fill;
+    flex-shrink: 1;
+    flex-direction: column;
 }
 
 .button:hover {
