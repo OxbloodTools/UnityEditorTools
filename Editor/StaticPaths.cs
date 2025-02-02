@@ -15,8 +15,9 @@ namespace Oxblood.editor
         public const string TargetLabel = "OxbloodAsset";
         public const string AssetLibraryDataPath = "Packages/com.oxblood.oxbloodtools/Resources/LibraryData.txt";
         public const string PhotoSceneResource = "Packages/com.oxblood.oxbloodtools/Resources/PhotoStudio.unity";
-        public const string PhotoScenePath = "Assets/Oxblood/PhotoStudio.unity";
-        public const string OxbloodGeneratedData = "Assets/Oxblood/";
+        public const string OxbloodGeneratedData = "Assets/zResources/Oxblood/";
+        public const string PhotoSceneName = "ThumbnailPhotoStudio.unity";
+        public const string PhotoScenePath = OxbloodGeneratedData + PhotoSceneName;
 
     }
 }

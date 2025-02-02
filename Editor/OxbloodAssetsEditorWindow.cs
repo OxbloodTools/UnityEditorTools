@@ -21,8 +21,6 @@ namespace Oxblood.editor
 
         private void OnEnable()
         {
-            InitialiseOxbloodTools.Initialise();
-            
             VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.oxblood.oxbloodtools/UI/OxbloodAssetsWindow.uxml");
             visualTree.CloneTree(rootVisualElement);
 
@@ -37,6 +35,8 @@ namespace Oxblood.editor
 
             _assetGrabber = ScriptableObject.CreateInstance<AssetGrabber>(); //the class that handles all the library data
 
+
+            InitialiseOxbloodTools.Initialise();
             RefreshGalleryView();
         }
 

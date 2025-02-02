@@ -13,11 +13,10 @@ namespace Oxblood.editor
 
         //I discovered a huge amount of redundancy here as I realised serialisation etc is unnecessary because I can use the generated image files and names as links to prefabs with GUIDS, cunt.
 
-        public void RebuildOxbloodAssetDatabase() //used when doing a complete rescan of the library.  Will wipe everything each time and start fresh - feels like this will be hefty no matter what
+        public void RebuildOxbloodAssetDatabase() //used when doing a complete rescan of the library.  Will wipe everything each time and start fresh - feels like this will be hefty no matter what?
         {
             string currentScenePath = SceneManager.GetActiveScene().path; //so we can return to scene we started in after screenshots are done
-            string[] existingImgFiles = Directory.GetFiles(StaticPaths.OxbloodGeneratedData);
-            foreach (string existingImgFile in existingImgFiles) File.Delete(existingImgFile);
+            EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene()); // ask to save current scene before beginning
 
             RefreshAssetLibraryGuids();
             foreach (string guid in oxbloodAssetGuids)
@@ -30,7 +29,7 @@ namespace Oxblood.editor
             EditorSceneManager.OpenScene(currentScenePath, OpenSceneMode.Single);
         }
 
-        public void RefreshAssetLibraryGuids() // re-scans the project for labelled assets then populate the main dictionary with Guids and names  DONT NEED NAMES FOOL!
+        public void RefreshAssetLibraryGuids() // re-scans the project for labelled assets then populate the main dictionary with Guids and names  (DONT NEED NAMES FOOL!  anotehr redundancy?)
         {
             oxbloodAssetGuids.Clear();
             string[] guids = UnityEditor.AssetDatabase.FindAssets($"l:{StaticPaths.TargetLabel}");
@@ -115,7 +114,7 @@ namespace Oxblood.editor
             Object.DestroyImmediate(instance);
 
 
-            UnityEditor.AssetDatabase.Refresh();
+            AssetDatabase.Refresh();
         }
 
         private Bounds GetPrefabBounds(GameObject go)
@@ -136,10 +135,5 @@ namespace Oxblood.editor
         }
 
         #endregion
-
-        public AssetGrabber() //default constructor
-        {
-            //LoadDatabaseInfo();
-        }
     }
 }
