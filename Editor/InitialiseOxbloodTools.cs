@@ -13,13 +13,12 @@ namespace Oxblood.editor
         {
             if (!Directory.Exists(StaticData.OxbloodGeneratedData))
             {
-                Debug.Log("Creating Oxblood Generated Data Directory");
+                Debug.Log("Generating Oxblood dependencies and file structure...");
                 Directory.CreateDirectory(StaticData.OxbloodGeneratedData);
             }
 
             if (!File.Exists(StaticData.PhotoScenePath))
             {
-                Debug.Log("Creating Oxblood Dependencies");
                 string currentScenePath = SceneManager.GetActiveScene().path;
                 EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene()); 
                 //File.Copy(StaticData.PhotoSceneResource, StaticData.PhotoScenePath, overwrite: true);  would need to be a specific Unity version ?
@@ -41,14 +40,14 @@ namespace Oxblood.editor
                 GameObject lightObject = new GameObject("Main Light");
                 Light light = lightObject.AddComponent<Light>();
                 light.type = LightType.Directional;
-                light.intensity = 3;
+                light.intensity = 2.5f;
                 lightObject.transform.rotation = Quaternion.Euler(60, 75, 135);
                 
                 //Create another light
                 GameObject lightObject2 = new GameObject("Main Light2");
                 Light light2 = lightObject2.AddComponent<Light>();
                 light2.type = LightType.Directional;
-                light2.intensity = 1;
+                light2.intensity = 0.75f;
                 lightObject2.transform.rotation = Quaternion.Euler(-60, 0, 135);
                 
                 //save it

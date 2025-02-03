@@ -6,9 +6,15 @@
     -unity-font-definition: resource('RedHatDisplay-Bold');
     -unity-font-style: normal;
     -unity-background-image-tint-color: rgb(104, 26, 26);
+    white-space: normal;
     background-image: resource('T_UI_Button1');
-    -unity-background-scale-mode: stretch-to-fill;
-    min-height: 25px;
+    flex-direction: row;
+    flex-shrink: 0;
+    align-items: flex-start;
+    align-content: stretch;
+    align-self: auto;
+    flex-grow: 1;
+    min-height: 30px;
 }
 
 .button:hover {
@@ -54,25 +60,6 @@
     flex-shrink: 1;
 }
 
-.button {
-    font-size: 12px;
-    -unity-text-align: middle-center;
-    color: rgb(210, 210, 210);
-    align-items: auto;
-    justify-content: flex-start;
-    align-self: auto;
-    align-content: auto;
-    text-overflow: clip;
-    -unity-font-definition: resource('RedHatDisplay-Bold');
-    -unity-font-style: normal;
-    flex-grow: 1;
-    -unity-background-image-tint-color: rgb(104, 26, 26);
-    background-image: resource('T_UI_Button1');
-    -unity-background-scale-mode: stretch-to-fill;
-    flex-shrink: 1;
-    flex-direction: column;
-}
-
 .galleryItem {
     border-top-width: 1px;
     border-right-width: 1px;
@@ -105,7 +92,7 @@
 
 .galleryItem:hover {
     background-color: rgb(100, 25, 25);
-    scale: 1.05 1.05;
+    scale: 1 1;
     transition-timing-function: ease-out-back;
     transition-delay: 0s;
     transition-duration: 0.1s;
@@ -131,6 +118,24 @@
     flex-shrink: 1;
     flex-direction: column;
     flex-wrap: nowrap;
+}
+
+.galleryItem > .content-container:hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    scale: 1.1 1.1;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out-back;
 }
 
 .assetLabel {

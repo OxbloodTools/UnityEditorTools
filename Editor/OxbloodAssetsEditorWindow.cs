@@ -12,14 +12,18 @@ namespace Oxblood.editor
         private Button _refreshLibraryFull;
         private VisualElement _imageContainer;
         private AssetGrabber _assetGrabber;
-        
+
         private static Texture2D _tabIcon;
 
         [MenuItem("Oxblood/Assets")]
         public static void ShowWindow()
         {
             OxbloodAssetsEditorWindow window = GetWindow<OxbloodAssetsEditorWindow>();
-            window.titleContent = new GUIContent("Oxblood Assets", LoadIcon());
+            //window.titleContent = new GUIContent("Oxblood Assets", LoadIcon());
+            //window.titleContent = EditorGUIUtility.IconContent("d_PreMatCube");
+            GUIContent t = EditorGUIUtility.IconContent("d_PreMatCube");
+            t.text = "Oxblood Assets";
+            window.titleContent = t;
         }
 
         private void OnEnable()
@@ -95,6 +99,7 @@ namespace Oxblood.editor
 
                 container.Add(content);
                 container.Add(nameLabel);
+                container.tooltip = Path.GetFileNameWithoutExtension(AssetDatabase.GUIDToAssetPath(Path.GetFileNameWithoutExtension(path)));
                 _imageContainer.Add(container);
             }
         }
@@ -105,7 +110,7 @@ namespace Oxblood.editor
             int lastUnderscoreIndex = input.LastIndexOf('_');
             return lastUnderscoreIndex == -1 ? input : input.Substring(lastUnderscoreIndex + 1);
         }
-        
+
         private static Texture2D LoadIcon()
         {
             if (_tabIcon == null)
@@ -113,6 +118,7 @@ namespace Oxblood.editor
                 string iconPath = StaticData.OxbloodPackageResources + "T_UI_Logo.png";
                 _tabIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(iconPath);
             }
+
             return _tabIcon;
         }
 

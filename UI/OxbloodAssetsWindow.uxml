@@ -2,9 +2,9 @@
     <engine:Template name="LogoHeader" src="project://database/Packages/com.oxblood.oxbloodtools/UI/LogoHeader.uxml?fileID=9197481963319205126&amp;guid=9cae6954be8cf1b42b4aa099ac889629&amp;type=3#LogoHeader" />
     <Style src="project://database/Packages/com.oxblood.oxbloodtools/UI/OxbloodStyle.uss?fileID=7433441132597879392&amp;guid=b4bac1363fb393942a14d41495954ceb&amp;type=3#OxbloodStyle" />
     <engine:Instance template="LogoHeader" name="TemplateContainer" enabled="true" style="min-height: 35px;" />
-    <engine:VisualElement style="flex-wrap: wrap; flex-direction: row; flex-grow: 0; flex-shrink: 0;">
-        <engine:Button text="Rescan Library" name="_refreshLibrary" class="button" />
-        <engine:Button text="REBUILD" name="_refreshLibraryFull" class="button" style="flex-grow: 0; min-width: 12%; -unity-font-definition: resource(&apos;RedHatDisplay-Black&apos;);" />
+    <engine:VisualElement enabled="true" style="flex-direction: row;">
+        <engine:Button text="Rescan Library" name="_refreshLibrary" focusable="false" tooltip="Scans the project looking for new content with an &apos;OxbloodAsset&apos; label" class="button" />
+        <engine:Button text="REBUILD" name="_refreshLibraryFull" focusable="false" tooltip="Scans the project and OVERWRITES all existing library content" class="button" style="flex-grow: 0; min-width: 12%; -unity-font-definition: resource(&apos;RedHatDisplay-Black&apos;);" />
     </engine:VisualElement>
     <engine:ScrollView style="flex-grow: 1;">
         <engine:VisualElement name="_galleryWindow" class="galleryWindow" style="flex-grow: 0; margin-top: -10px; margin-right: -10px; margin-bottom: -10px; margin-left: -10px; padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px;">
