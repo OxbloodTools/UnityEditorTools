@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
@@ -13,11 +12,14 @@ namespace Oxblood.editor
         private Button _refreshLibraryFull;
         private VisualElement _imageContainer;
         private AssetGrabber _assetGrabber;
+        
+        private static Texture2D _tabIcon;
 
         [MenuItem("Oxblood/Assets")]
         public static void ShowWindow()
         {
-            GetWindow<OxbloodAssetsEditorWindow>("Oxblood Assets");
+            OxbloodAssetsEditorWindow window = GetWindow<OxbloodAssetsEditorWindow>();
+            window.titleContent = new GUIContent("Oxblood Assets", LoadIcon());
         }
 
         private void OnEnable()
@@ -103,6 +105,16 @@ namespace Oxblood.editor
             int lastUnderscoreIndex = input.LastIndexOf('_');
             return lastUnderscoreIndex == -1 ? input : input.Substring(lastUnderscoreIndex + 1);
         }
+        
+        private static Texture2D LoadIcon()
+        {
+            if (_tabIcon == null)
+            {
+                string iconPath = StaticData.OxbloodPackageResources + "T_UI_Logo.png";
+                _tabIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(iconPath);
+            }
+            return _tabIcon;
+        }
 
         private static void SpawnPrefabByGuid(string prefabGuid)
         {
@@ -118,7 +130,7 @@ namespace Oxblood.editor
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             if (prefab == null)
             {
-                Debug.LogError($"Prefab not found, try rebuilding the library");
+                Debug.LogError($"Prefab at {prefabPath} not found, try rebuilding the library");
                 return;
             }
 

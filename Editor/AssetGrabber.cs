@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -9,10 +7,13 @@ using UnityEngine.SceneManagement;
 
 namespace Oxblood.editor
 {
-    public class AssetGrabber : ScriptableObject
+    public class AssetGrabber : Editor
     {
-        public List<string> oxbloodAssetGuids = new List<string>();
+        public List<string> oxbloodAssetGuids = new List<string>(); //In a perfect world, this would be static.
 
+
+        #region Methods
+        
         public void RebuildOxbloodAssetDatabase(bool forceFull)
         {
             string currentScenePath = SceneManager.GetActiveScene().path; //so we can return to scene we started in after screenshots are done
@@ -30,14 +31,12 @@ namespace Oxblood.editor
             EditorSceneManager.OpenScene(currentScenePath, OpenSceneMode.Single);
         }
 
-        #region Methods
-
         private void RefreshAssetLibraryGuids(bool full) // re-scans the project for labelled assets then populate the main list with Guids and names
         {
             oxbloodAssetGuids.Clear();
             string[] guids = UnityEditor.AssetDatabase.FindAssets($"l:{StaticData.TargetLabel}");
 
-            if (!full) //this is disgusting
+            if (!full) //this is filth
             {
                 string[] existingGuidsPaths = Directory.GetFiles(StaticData.OxbloodGeneratedData); //all the objects in the resources folder (images AND all the other junk)
 

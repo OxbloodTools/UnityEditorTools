@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
-using UnityEditor;
-using UnityEngine.UIElements;
-
 namespace Oxblood.editor
 {
     /// <summary>
@@ -16,5 +9,6 @@ namespace Oxblood.editor
         public const string OxbloodGeneratedData = "Assets/zResources/Oxblood/";
         public const string PhotoScenePath = OxbloodGeneratedData + "ThumbnailPhotoStudio.unity";
         public const string UiComponentsPath = "Packages/com.oxblood.oxbloodtools/UI/";
+        public const string OxbloodPackageResources = "Packages/com.oxblood.oxbloodtools/Resources/";
     }
 }
