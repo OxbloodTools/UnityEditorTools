@@ -10,6 +10,7 @@ namespace Oxblood.editor
     public class OxbloodAssetsEditorWindow : EditorWindow
     {
         private Button _refreshLibrary;
+        private Button _refreshLibraryFull;
         private VisualElement _imageContainer;
         private AssetGrabber _assetGrabber;
 
@@ -29,7 +30,10 @@ namespace Oxblood.editor
 
 
             _refreshLibrary = rootVisualElement.Q<Button>("_refreshLibrary");
-            _refreshLibrary.clicked += RescanLibrary;
+            _refreshLibraryFull = rootVisualElement.Q<Button>("_refreshLibraryFull");
+            _refreshLibrary.clicked += RebuildLibrary;
+            _refreshLibraryFull.clicked += RebuildLibraryFull;
+            
 
             _imageContainer = rootVisualElement.Q<VisualElement>("_galleryWindow");
 
@@ -42,14 +46,21 @@ namespace Oxblood.editor
 
         private void OnDisable()
         {
-            _refreshLibrary.clicked -= RescanLibrary;
+            _refreshLibrary.clicked -= RebuildLibrary;
+            _refreshLibraryFull.clicked -= RebuildLibraryFull;
         }
 
-        private void RescanLibrary()
+        private void RebuildLibrary()
         {
-            _assetGrabber.RebuildOxbloodAssetDatabase();
+            _assetGrabber.RebuildOxbloodAssetDatabase(false);
             RefreshGalleryView();
         }
+        private void RebuildLibraryFull()
+        {
+            _assetGrabber.RebuildOxbloodAssetDatabase(true);
+            RefreshGalleryView();
+        }
+        
 
         private void RefreshGalleryView()
         {

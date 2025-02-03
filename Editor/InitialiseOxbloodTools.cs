@@ -22,7 +22,7 @@ namespace Oxblood.editor
 
             if (!File.Exists(StaticPaths.PhotoScenePath))
             {
-                Debug.Log("Creating Photo Scene");
+                Debug.Log("Creating Oxblood Dependencies");
                 string currentScenePath = SceneManager.GetActiveScene().path;
                 EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene()); 
                 //File.Copy(StaticPaths.PhotoSceneResource, StaticPaths.PhotoScenePath, overwrite: true);  would need to be a specific Unity version ?
@@ -37,6 +37,8 @@ namespace Oxblood.editor
                 cameraObject.transform.position = new Vector3(-10, 10, -10);
                 camera.transform.rotation = Quaternion.Euler(35, 45, 0);
                 camera.orthographic = true;
+                camera.backgroundColor = Color.clear;
+                camera.clearFlags = CameraClearFlags.SolidColor;
 
                 // Create a Light
                 GameObject lightObject = new GameObject("Main Light");
@@ -58,7 +60,7 @@ namespace Oxblood.editor
                 //Open original scene
                 EditorSceneManager.OpenScene(currentScenePath, OpenSceneMode.Single);
                 
-                Debug.Log("Photo Scene File Created");
+                Debug.Log("Oxblood Dependencies Generated");
             }
             AssetDatabase.Refresh();
         }

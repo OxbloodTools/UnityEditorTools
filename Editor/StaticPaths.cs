@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
@@ -14,7 +15,6 @@ namespace Oxblood.editor
     {
         public const string TargetLabel = "OxbloodAsset";
         public const string AssetLibraryDataPath = "Packages/com.oxblood.oxbloodtools/Resources/LibraryData.txt";
-        public const string PhotoSceneResource = "Packages/com.oxblood.oxbloodtools/Resources/PhotoStudio.unity";
         public const string OxbloodGeneratedData = "Assets/zResources/Oxblood/";
         public const string PhotoSceneName = "ThumbnailPhotoStudio.unity";
         public const string PhotoScenePath = OxbloodGeneratedData + PhotoSceneName;
