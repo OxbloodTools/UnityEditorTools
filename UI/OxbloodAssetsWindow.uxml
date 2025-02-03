@@ -4,7 +4,7 @@
     <engine:Instance template="LogoHeader" name="TemplateContainer" enabled="true" style="min-height: 35px;" />
     <engine:VisualElement style="flex-wrap: wrap; flex-direction: row; flex-grow: 0; flex-shrink: 0;">
         <engine:Button text="Rescan Library" name="_refreshLibrary" class="button" />
-        <engine:Button text="REBUILD" name="_refreshLibraryFull" class="button" style="max-width: 55%; flex-grow: 0;" />
+        <engine:Button text="REBUILD" name="_refreshLibraryFull" class="button" style="flex-grow: 0; min-width: 12%;" />
     </engine:VisualElement>
     <engine:ScrollView style="flex-grow: 1;">
         <engine:VisualElement name="_galleryWindow" class="galleryWindow" style="flex-grow: 0; margin-top: -10px; margin-right: -10px; margin-bottom: -10px; margin-left: -10px; padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px;">
@@ -27,102 +27,6 @@
                 <engine:Label text="Asset Name" class="assetLabel" />
             </engine:VisualElement>
             <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="assetObject galleryItem">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
-                <engine:Label text="Asset Name" class="assetLabel" />
-            </engine:VisualElement>
-            <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">
                 <engine:Label text="Asset Name" class="assetLabel" />
             </engine:VisualElement>
             <engine:VisualElement name="_galleryItem" tabindex="0" class="galleryItem" style="align-items: stretch;">

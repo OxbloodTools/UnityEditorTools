@@ -17,28 +17,25 @@ namespace Oxblood.editor
         [MenuItem("Oxblood/Assets")]
         public static void ShowWindow()
         {
-            GetWindow<OxbloodAssetsEditorWindow>("Oxblood Assets", true, typeof(EditorWindow));
+            GetWindow<OxbloodAssetsEditorWindow>("Oxblood Assets");
         }
 
         private void OnEnable()
         {
-            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.oxblood.oxbloodtools/UI/OxbloodAssetsWindow.uxml");
-            visualTree.CloneTree(rootVisualElement);
-
-            StyleSheet styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Packages/com.oxblood.oxbloodtools/UI/OxbloodStyle.uss");
-            rootVisualElement.styleSheets.Add(styleSheet);
-
-
-            _refreshLibrary = rootVisualElement.Q<Button>("_refreshLibrary");
-            _refreshLibraryFull = rootVisualElement.Q<Button>("_refreshLibraryFull");
-            _refreshLibrary.clicked += RebuildLibrary;
-            _refreshLibraryFull.clicked += RebuildLibraryFull;
-            
-
-            _imageContainer = rootVisualElement.Q<VisualElement>("_galleryWindow");
-
             _assetGrabber = ScriptableObject.CreateInstance<AssetGrabber>(); //the class that handles all the library data
 
+            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(StaticData.UiComponentsPath + "OxbloodAssetsWindow.uxml");
+            visualTree.CloneTree(rootVisualElement);
+
+            StyleSheet styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(StaticData.UiComponentsPath + "OxbloodStyle.uss");
+            rootVisualElement.styleSheets.Add(styleSheet);
+
+            _refreshLibrary = rootVisualElement.Q<Button>("_refreshLibrary");
+            _refreshLibrary.clicked += RebuildLibrary;
+            _refreshLibraryFull = rootVisualElement.Q<Button>("_refreshLibraryFull");
+            _refreshLibraryFull.clicked += RebuildLibraryFull;
+
+            _imageContainer = rootVisualElement.Q<VisualElement>("_galleryWindow");
 
             InitialiseOxbloodTools.Initialise();
             RefreshGalleryView();
@@ -55,18 +52,18 @@ namespace Oxblood.editor
             _assetGrabber.RebuildOxbloodAssetDatabase(false);
             RefreshGalleryView();
         }
+
         private void RebuildLibraryFull()
         {
             _assetGrabber.RebuildOxbloodAssetDatabase(true);
             RefreshGalleryView();
         }
-        
 
         private void RefreshGalleryView()
         {
             _imageContainer.Clear();
 
-            string[] imgGuids = AssetDatabase.FindAssets("t:Texture2D", new[] { StaticPaths.OxbloodGeneratedData });
+            string[] imgGuids = AssetDatabase.FindAssets("t:Texture2D", new[] { StaticData.OxbloodGeneratedData });
 
             foreach (string imgGuid in imgGuids)
             {
@@ -103,13 +100,9 @@ namespace Oxblood.editor
 
         private static string TrimUntilLastUnderscore(string input)
         {
-            if (input == null)
-                throw new ArgumentNullException(nameof(input)); //this should never fire hopefully, just trying to do best practices
-
             int lastUnderscoreIndex = input.LastIndexOf('_');
             return lastUnderscoreIndex == -1 ? input : input.Substring(lastUnderscoreIndex + 1);
         }
-
 
         private static void SpawnPrefabByGuid(string prefabGuid)
         {
@@ -125,7 +118,7 @@ namespace Oxblood.editor
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             if (prefab == null)
             {
-                Debug.LogError($"Prefab not found, try rebuilding the library Library");
+                Debug.LogError($"Prefab not found, try rebuilding the library");
                 return;
             }
 

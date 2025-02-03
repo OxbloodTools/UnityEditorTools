@@ -14,18 +14,18 @@ namespace Oxblood.editor
     {
         public static void Initialise()
         {
-            if (!Directory.Exists(StaticPaths.OxbloodGeneratedData))
+            if (!Directory.Exists(StaticData.OxbloodGeneratedData))
             {
                 Debug.Log("Creating Oxblood Generated Data Directory");
-                Directory.CreateDirectory(StaticPaths.OxbloodGeneratedData);
+                Directory.CreateDirectory(StaticData.OxbloodGeneratedData);
             }
 
-            if (!File.Exists(StaticPaths.PhotoScenePath))
+            if (!File.Exists(StaticData.PhotoScenePath))
             {
                 Debug.Log("Creating Oxblood Dependencies");
                 string currentScenePath = SceneManager.GetActiveScene().path;
                 EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene()); 
-                //File.Copy(StaticPaths.PhotoSceneResource, StaticPaths.PhotoScenePath, overwrite: true);  would need to be a specific Unity version ?
+                //File.Copy(StaticData.PhotoSceneResource, StaticData.PhotoScenePath, overwrite: true);  would need to be a specific Unity version ?
                 
                 //Create a scene from scratch to make it version-proof
                 Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
@@ -55,8 +55,8 @@ namespace Oxblood.editor
                 lightObject2.transform.rotation = Quaternion.Euler(-60, 0, 135);
                 
                 //save it
-                EditorSceneManager.SaveScene(scene, StaticPaths.PhotoScenePath);
-                AssetDatabase.ImportAsset(StaticPaths.PhotoScenePath);
+                EditorSceneManager.SaveScene(scene, StaticData.PhotoScenePath);
+                AssetDatabase.ImportAsset(StaticData.PhotoScenePath);
                 //Open original scene
                 EditorSceneManager.OpenScene(currentScenePath, OpenSceneMode.Single);
                 

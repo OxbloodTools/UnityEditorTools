@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -10,13 +11,13 @@ namespace Oxblood.editor
 {
     public class AssetGrabber : Editor
     {
-        public List<string> oxbloodAssetGuids = new List<string>(); //I want this to be static, possible?
+        public List<string> oxbloodAssetGuids = new List<string>();
 
         public void RebuildOxbloodAssetDatabase(bool forceFull)
         {
             string currentScenePath = SceneManager.GetActiveScene().path; //so we can return to scene we started in after screenshots are done
             EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene()); // ask to save current scene before beginning
-
+            //if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) //Hilariously verbose)
 
             RefreshAssetLibraryGuids(forceFull);
             foreach (string guid in oxbloodAssetGuids)
@@ -26,19 +27,19 @@ namespace Oxblood.editor
                 TakeObjectPicture(prefab, guid);
             }
 
-
             EditorSceneManager.OpenScene(currentScenePath, OpenSceneMode.Single);
         }
 
+        #region Methods
 
-        public void RefreshAssetLibraryGuids(bool full) // re-scans the project for labelled assets then populate the main dictionary with Guids and names
+        private void RefreshAssetLibraryGuids(bool full) // re-scans the project for labelled assets then populate the main list with Guids and names
         {
             oxbloodAssetGuids.Clear();
-            string[] guids = UnityEditor.AssetDatabase.FindAssets($"l:{StaticPaths.TargetLabel}");
+            string[] guids = UnityEditor.AssetDatabase.FindAssets($"l:{StaticData.TargetLabel}");
 
             if (!full) //this is disgusting
             {
-                string[] existingGuidsPaths = Directory.GetFiles(StaticPaths.OxbloodGeneratedData); //all the objects in the resources folder (images AND all the other junk)
+                string[] existingGuidsPaths = Directory.GetFiles(StaticData.OxbloodGeneratedData); //all the objects in the resources folder (images AND all the other junk)
 
                 string searchString = "";
                 foreach (string existingPath in existingGuidsPaths)
@@ -54,18 +55,29 @@ namespace Oxblood.editor
                     }
                 }
             }
+            else
+            {
+                //delete all thumbnails
+                DirectoryInfo di = new DirectoryInfo(StaticData.OxbloodGeneratedData);
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    if (file.Name.Contains(".png"))
+                    {
+                        file.Delete();
+                    }
+                }
+            }
 
             foreach (string guid in guids)
             {
                 if (guid != "") oxbloodAssetGuids.Add(guid);
             }
         }
-       
-        #region Methods
 
         private void TakeObjectPicture(GameObject prefab, string guid)
         {
-            Scene scene = EditorSceneManager.OpenScene(StaticPaths.PhotoScenePath, OpenSceneMode.Single);
+            Scene scene = EditorSceneManager.OpenScene(StaticData.PhotoScenePath, OpenSceneMode.Single);
             GameObject instance = PrefabUtility.InstantiatePrefab(prefab, scene) as GameObject;
 
             Bounds bounds = GetPrefabBounds(instance);
@@ -75,8 +87,7 @@ namespace Oxblood.editor
             screenshotCamera.transform.LookAt(bounds.center);
             screenshotCamera.orthographicSize = maxExtent * 1.2f;
 
-
-            string fullPath = StaticPaths.OxbloodGeneratedData + guid + ".png";
+            string fullPath = StaticData.OxbloodGeneratedData + guid + ".png";
 
             RenderTexture rt = new RenderTexture(256, 256, 24, RenderTextureFormat.ARGB32);
             screenshotCamera.targetTexture = rt;
@@ -88,13 +99,11 @@ namespace Oxblood.editor
 
             byte[] bytes = screenshot.EncodeToPNG();
             File.WriteAllBytes(fullPath, bytes);
-            //Debug.Log("Screenshot saved to: " + fullPath);
 
             RenderTexture.active = null;
-            Object.DestroyImmediate(screenshotCamera.gameObject);
-            Object.DestroyImmediate(rt);
-            Object.DestroyImmediate(instance);
-
+            DestroyImmediate(screenshotCamera.gameObject);
+            DestroyImmediate(rt);
+            DestroyImmediate(instance);
 
             AssetDatabase.Refresh();
         }
