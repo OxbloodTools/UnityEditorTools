@@ -34,7 +34,7 @@ namespace Oxblood.editor
                 GameObject cameraObject = new GameObject("Main Camera");
                 Camera camera = cameraObject.AddComponent<Camera>();
                 camera.tag = "MainCamera";
-                cameraObject.transform.position = new Vector3(-10, 10, -10);
+                cameraObject.transform.position = new Vector3(-100, 100, -100);
                 camera.transform.rotation = Quaternion.Euler(35, 45, 0);
                 camera.orthographic = true;
                 camera.backgroundColor = Color.clear;

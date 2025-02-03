@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace Oxblood.editor
 {
-    public class AssetGrabber : Editor
+    public class AssetGrabber : ScriptableObject
     {
         public List<string> oxbloodAssetGuids = new List<string>();
 
