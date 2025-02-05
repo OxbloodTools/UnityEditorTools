@@ -10,11 +10,12 @@
     background-image: resource('T_UI_Button1');
     flex-direction: row;
     flex-shrink: 0;
-    align-items: flex-start;
+    align-items: auto;
     align-content: stretch;
-    align-self: auto;
-    flex-grow: 1;
+    align-self: flex-start;
+    flex-grow: 0;
     min-height: 30px;
+    justify-content: flex-start;
 }
 
 .button:hover {
@@ -25,22 +26,6 @@
 .button:active {
     -unity-background-image-tint-color: rgb(47, 21, 21);
     color: rgb(205, 205, 205);
-}
-
-.header {
-    font-size: 30px;
-    -unity-text-align: upper-center;
-    -unity-text-outline-width: 0;
-    text-shadow: 0 8px 4px rgb(157, 0, 0);
-    color: rgb(245, 245, 245);
-}
-
-.description {
-    font-size: 16px;
-    color: rgb(229, 229, 229);
-    -unity-text-align: upper-center;
-    flex-grow: 1;
-    opacity: 1;
 }
 
 .label {

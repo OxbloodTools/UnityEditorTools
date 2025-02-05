@@ -12,6 +12,7 @@ namespace Oxblood.editor
         private Button _refreshLibraryFull;
         private VisualElement _imageContainer;
         private AssetGrabber _assetGrabber;
+        private Label _readMeLabel;
 
         private static Texture2D _tabIcon;
 
@@ -19,11 +20,9 @@ namespace Oxblood.editor
         public static void ShowWindow()
         {
             OxbloodAssetsEditorWindow window = GetWindow<OxbloodAssetsEditorWindow>();
-            //window.titleContent = new GUIContent("Oxblood Assets", LoadIcon());
-            //window.titleContent = EditorGUIUtility.IconContent("d_PreMatCube");
-            GUIContent t = EditorGUIUtility.IconContent("d_PreMatCube");
-            t.text = "Oxblood Assets";
-            window.titleContent = t;
+            GUIContent tabIcon = EditorGUIUtility.IconContent("d_PreMatCube");
+            tabIcon.text = "Oxblood Assets";
+            window.titleContent = tabIcon;
         }
 
         private void OnEnable()
@@ -42,6 +41,9 @@ namespace Oxblood.editor
             _refreshLibraryFull.clicked += RebuildLibraryFull;
 
             _imageContainer = rootVisualElement.Q<VisualElement>("_galleryWindow");
+            
+            _readMeLabel = rootVisualElement.Q<Label>("_readMeLabel");
+            _readMeLabel.RegisterCallback<ClickEvent>(OpenReadMe);
 
             InitialiseOxbloodTools.Initialise();
             RefreshGalleryView();
@@ -147,6 +149,11 @@ namespace Oxblood.editor
             // Register undo operation
             Undo.RegisterCreatedObjectUndo(instance, "Spawn Prefab");
             Selection.activeObject = instance;
+        }
+
+        private void OpenReadMe(ClickEvent evt)
+        {
+            EditorUtility.OpenWithDefaultApp(StaticData.ReadMeFile);
         }
     }
 }

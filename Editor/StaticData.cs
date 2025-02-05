@@ -10,5 +10,6 @@ namespace Oxblood.editor
         public const string PhotoScenePath = OxbloodGeneratedData + "ThumbnailPhotoStudio.unity";
         public const string UiComponentsPath = "Packages/com.oxblood.oxbloodtools/UI/";
         public const string OxbloodPackageResources = "Packages/com.oxblood.oxbloodtools/Resources/";
+        public const string ReadMeFile = "Packages/com.oxblood.oxbloodtools/Documentation~/OxbloodTools_Readme.pdf";
     }
 }

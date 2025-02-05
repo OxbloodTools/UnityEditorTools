@@ -1,22 +1,35 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <engine:Template name="LogoHeader" src="project://database/Packages/com.oxblood.oxbloodtools/UI/LogoHeader.uxml?fileID=9197481963319205126&amp;guid=9cae6954be8cf1b42b4aa099ac889629&amp;type=3#LogoHeader" />
     <Style src="project://database/Packages/com.oxblood.oxbloodtools/UI/OxbloodStyle.uss?fileID=7433441132597879392&amp;guid=b4bac1363fb393942a14d41495954ceb&amp;type=3#OxbloodStyle" />
-    <engine:Instance template="LogoHeader" name="LogoHeader" style="height: 64px;" />
-    <engine:VisualElement name="ToggleFeatures" style="flex-grow: 1;">
-        <engine:Toggle label="Teleport To Mouse" name="enableMoveToMouseToggle" value="true" tooltip="Press spacebar in the Scene view to teleport currently selected object to the mouse cursor" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+    <engine:VisualElement name="LogoHeader" tooltip="OXBLOOD Tools aims to provide a bunch o&apos; gubbins that helps speed up workflows and remove tedious cack wherever possible" style="-unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(37, 37, 37); -unity-background-scale-mode: stretch-to-fill; flex-grow: 0; align-self: stretch; align-content: flex-start; justify-content: flex-start; flex-shrink: 1; -unity-font-definition: resource(&apos;RedHatDisplay-Black&apos;); min-height: 22px; font-size: 8px; flex-direction: row; flex-wrap: nowrap; align-items: center; padding-left: 5px; padding-right: 5px;">
+        <engine:Label text="OXBLOOD" style="-unity-text-align: middle-left; font-size: 12px; text-shadow: 0 1.6px 0 rgb(120, 10, 10);" />
+        <engine:Label text="Tools" style="-unity-font-definition: resource(&apos;RedHatDisplay-Bold&apos;);" />
+        <engine:Label text="Readme" style="flex-direction: row; flex-wrap: wrap; flex-shrink: 0; flex-grow: 1; -unity-text-align: upper-right; -unity-font-definition: resource(&apos;RedHatDisplay-Bold&apos;); -unity-font-style: normal; color: rgb(109, 180, 212);" />
     </engine:VisualElement>
-    <engine:VisualElement name="SelectionFeatures" style="flex-grow: 1; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
-        <engine:DropdownField label="Select by Layer" name="layerDropdown" class="label" style="opacity: 1; right: auto; flex-direction: row; max-height: none; flex-wrap: wrap-reverse; max-width: none; align-items: stretch; justify-content: space-evenly; align-self: auto; align-content: auto;">
-            <engine:Button text="Select" name="_selectObjectsByLayerButton" class="button" style="min-width: auto; width: 20%;" />
+    <engine:VisualElement name="SectionContainer" style="flex-grow: 0; align-content: auto; justify-content: flex-end; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-left-color: rgb(33, 33, 33); border-right-color: rgb(33, 33, 33); border-top-color: rgb(33, 33, 33); border-bottom-color: rgb(33, 33, 33); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; background-color: rgb(33, 33, 33); margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;">
+        <engine:Label text="Editor Features" style="align-items: auto; align-self: center; -unity-font-definition: resource(&apos;RedHatDisplay-Bold&apos;); -unity-text-align: upper-center; font-size: 18px; margin-top: 10px;" />
+        <engine:VisualElement name="ToggleFeatures" style="flex-direction: row; flex-wrap: wrap; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px; -unity-text-align: upper-right; justify-content: space-around; align-self: auto; align-content: stretch; -unity-font-definition: resource(&apos;RedHatDisplay-Bold&apos;); flex-grow: 0;">
+            <engine:Toggle label="Teleport To Mouse" name="enableMoveToMouseToggle" value="true" tooltip="Press spacebar in the Scene view to teleport currently selected object to the mouse cursor" focusable="false" />
+            <engine:Toggle label="Toggle" focusable="false" />
+            <engine:Toggle label="Toggle" focusable="false" />
+            <engine:Toggle label="Toggle" />
+            <engine:Toggle label="Toggle" />
+            <engine:Toggle label="Toggle" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="SectionContainer" style="flex-grow: 0; align-content: auto; justify-content: flex-start; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-left-color: rgb(33, 33, 33); border-right-color: rgb(33, 33, 33); border-top-color: rgb(33, 33, 33); border-bottom-color: rgb(33, 33, 33); border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; background-color: rgb(33, 33, 33); margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; -unity-text-align: upper-left; flex-wrap: wrap; align-items: stretch; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+        <engine:Label text="Selection" style="align-items: auto; align-self: center; -unity-font-definition: resource(&apos;RedHatDisplay-Bold&apos;); -unity-text-align: upper-center; font-size: 18px; margin-top: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+        <engine:DropdownField label="Select by Layer:" name="layerDropdown" focusable="false" style="-unity-text-align: middle-left;">
+            <engine:Button text="Select" name="_selectObjectsByLayerButton" focusable="false" class="button" style="min-width: auto; width: 20%; flex-shrink: 1; flex-grow: 0; min-height: auto;" />
         </engine:DropdownField>
-        <engine:DropdownField label="Select by Component" name="layerDropdown" class="label" style="opacity: 1; right: auto; flex-direction: row; max-height: none; flex-wrap: wrap-reverse; max-width: none; align-items: stretch; justify-content: space-evenly; align-self: auto; align-content: auto;">
-            <engine:Button text="Select" name="_selectObjectsByTypeButton" class="button" style="min-width: auto; width: 20%;" />
+        <engine:DropdownField label="Select by Component:" name="layerDropdown" class="label">
+            <engine:Button text="Select" name="_selectObjectsByTypeButton" focusable="false" class="button" style="min-width: auto; width: 20%; min-height: auto;" />
         </engine:DropdownField>
-        <editor:TagField label="Select by Tag" value="Player" class="label" style="align-content: flex-start; align-self: auto; justify-content: flex-end;">
-            <engine:Button text="Select" class="button" style="width: 20%;" />
+        <editor:TagField label="Select by Tag:" value="Player" class="label">
+            <engine:Button text="Select" focusable="false" class="button" style="width: 20%; min-height: auto;" />
         </editor:TagField>
     </engine:VisualElement>
-    <engine:VisualElement name="StatsWindow" style="flex-grow: 1; background-color: rgb(51, 51, 51); max-width: 410%;">
+    <engine:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.41);" />
+    <engine:VisualElement name="StatsWindow" style="flex-grow: 0; background-color: rgb(51, 51, 51); max-width: 410%; align-content: flex-start; justify-content: flex-end; flex-direction: column; flex-wrap: nowrap; align-self: auto; background-position-x: center 0;">
         <engine:Label text="Scene Stats" tooltip="The numbers calculated here are approximate to avoid potential crashes" class="label" style="font-size: 18px; -unity-font-definition: resource(&apos;RedHatDisplay-Bold&apos;);" />
         <engine:Label text="0" name="_statTotalObjectCount" enable-rich-text="false" tooltip="All objects with an attached &apos;Transform&apos; are counted" class="label" style="-unity-text-align: middle-right; width: 40%;">
             <engine:Label text="Total Objects:" style="-unity-text-align: middle-left;" />
@@ -28,6 +41,6 @@
             <engine:Label text="Total Vertices:" style="-unity-text-align: middle-left;" />
         </engine:Label>
         <engine:ProgressBar value="0" name="_statRefreshBar" style="max-width: none; width: 40%; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; height: auto; max-height: 2%; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgb(255, 0, 0); align-content: auto; align-items: stretch;" />
-        <engine:Button text="Refresh" name="_refreshStatsButton" class="button" style="width: 40%;" />
+        <engine:Button text="Refresh" name="_refreshStatsButton" focusable="false" class="button" style="width: 40%;" />
     </engine:VisualElement>
 </engine:UXML>

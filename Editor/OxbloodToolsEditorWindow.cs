@@ -1,7 +1,9 @@
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace Oxblood.editor
@@ -26,6 +28,11 @@ namespace Oxblood.editor
         public static void ShowWindow()
         {
             GetWindow<OxbloodToolsEditorWindow>("Oxblood Tools", true, typeof(EditorWindow));
+
+            OxbloodToolsEditorWindow window = GetWindow<OxbloodToolsEditorWindow>();
+            GUIContent tabIcon = EditorGUIUtility.IconContent("ToolHandleGlobal");
+            tabIcon.text = "Oxblood Tools";
+            window.titleContent = tabIcon;
         }
 
         private void OnEnable()
@@ -50,8 +57,6 @@ namespace Oxblood.editor
             _layerDropdown = rootVisualElement.Q<DropdownField>("layerDropdown");
             _layerDropdown.choices = UnityEditorInternal.InternalEditorUtility.layers.ToList();
             _layerDropdown.value = _layerDropdown.choices[0];
-
-            //Hierarchy
 
             //Display and refresh scene stats
             _statRefreshBar = rootVisualElement.Q<ProgressBar>("_statRefreshBar");
@@ -122,32 +127,68 @@ namespace Oxblood.editor
 
         private void RefreshStats()
         {
-            int totalObjectCount = Resources.FindObjectsOfTypeAll<Transform>().Length;
+            int totalObjects = 0;
             int totalTriangles = 0;
             int totalVerts = 0;
 
-            //total object count
-            Transform[] totalObjects = Resources.FindObjectsOfTypeAll<Transform>();
-
-            //total tris and verts
-            MeshFilter[] statTotalMeshCount = Resources.FindObjectsOfTypeAll<MeshFilter>();
-            _statRefreshBar.highValue = totalObjects.Length;
-            foreach (MeshFilter mesh in statTotalMeshCount)
+            for (int i = 0; i < SceneManager.sceneCount; i++) //if multiple scenes are open, search em all
             {
-                if (mesh.sharedMesh != null)
+                Scene scene = SceneManager.GetSceneAt(i);
+
+                GameObject[] rootObjects = scene.GetRootGameObjects();
+                totalObjects += rootObjects.Length;
+
+                // Get the children as well
+                foreach (GameObject root in rootObjects)
                 {
-                    totalVerts += mesh.sharedMesh.triangles.Length;
-                    totalTriangles += mesh.sharedMesh.triangles.Length / 3;
-                    _statRefreshBar.value++;
+                    //add to total object count
+                    totalObjects += CountAllChildren(root.transform);
+                    //Get all the triangeles in each mesh by grabbing attached mesh filters
+                    MeshFilter[] meshFilters = root.GetComponentsInChildren<MeshFilter>(true);
+                    foreach (MeshFilter mf in meshFilters)
+                    {
+                        if (mf.sharedMesh != null)
+                        {
+                            totalVerts += mf.sharedMesh.vertexCount;
+                            totalTriangles += mf.sharedMesh.triangles.Length / 3;
+                        }
+                    }
                 }
             }
 
-            _statTotalObjectCount.text = totalObjectCount.ToString("N0");
+            static int CountAllChildren(Transform parent)
+            {
+                int count = 0;
+                foreach (Transform child in parent)
+                {
+                    count++;
+                    count += CountAllChildren(child);
+                }
+
+                return count;
+            }
+
+            _statRefreshBar.highValue = totalObjects;
+            _statTotalObjectCount.text = totalObjects.ToString("N0");
             _statTotalVertexCount.text = totalVerts.ToString("N0");
             _statTotalTriangleCount.text = totalTriangles.ToString("N0");
             _statRefreshBar.value = 0;
         }
 
         #endregion
+
+        void TerrainTriCount()
+        {
+            int totalTriangles = 0;
+            
+            Terrain[] terrains = GameObject.FindObjectsOfType<Terrain>();
+            foreach (Terrain terrain in terrains)
+            {
+                TerrainData data = terrain.terrainData;
+                int w = data.heightmapResolution - 1;
+                int h = data.heightmapResolution - 1;
+                totalTriangles += (w * h * 2); // 2 triangles per terrain quad
+            }
+        }
     }
 }

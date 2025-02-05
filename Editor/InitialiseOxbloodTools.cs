@@ -20,7 +20,8 @@ namespace Oxblood.editor
             if (!File.Exists(StaticData.PhotoScenePath))
             {
                 string currentScenePath = SceneManager.GetActiveScene().path;
-                EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene()); 
+                EditorSceneManager.SaveOpenScenes();
+                //EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene()); 
                 //File.Copy(StaticData.PhotoSceneResource, StaticData.PhotoScenePath, overwrite: true);  would need to be a specific Unity version ?
                 
                 //Create a scene from scratch to make it version-proof
