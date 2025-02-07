@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace Oxblood.editor
 {
-    //i need to clone the image scene and create some directories for the thumbnails to go.  Then, i need to make sure it all still works here and in a fresh project.
+    //I need to clone the image scene and create some directories for the thumbnails to go.  Then, I need to make sure it all still works here and in a fresh project.
     public static class InitialiseOxbloodTools
     {
         public static void Initialise()
@@ -15,7 +15,7 @@ namespace Oxblood.editor
             {
                 Debug.Log("Generating Oxblood dependencies and file structure...");
                 Directory.CreateDirectory(StaticData.OxbloodGeneratedData);
-            }
+            }      //Create Resource directory if one doesn't exist.
 
             if (!File.Exists(StaticData.PhotoScenePath))
             {
@@ -58,7 +58,8 @@ namespace Oxblood.editor
                 EditorSceneManager.OpenScene(currentScenePath, OpenSceneMode.Single);
                 
                 Debug.Log("Oxblood Dependencies Generated");
-            }
+            }                      //Create photo scene for asset thumbnails if one doesn't exist.
+            
             AssetDatabase.Refresh();
         }
     }

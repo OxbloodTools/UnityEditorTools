@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -14,15 +15,17 @@ namespace Oxblood.editor
         private bool _enableMoveToMousePosition;
         private Button _selectObjectsByComponentButton;
         private Button _selectObjectsByLayerButton;
+        private Button _selectObjectsByTagButton;
         private Button _refreshStatsButton;
         private DropdownField _layerDropdown;
+        private DropdownField _tagDropdown;
+        private ToolbarPopupSearchField _componentSearchField;
 
         // Variables
         private ProgressBar _statRefreshBar;
         private Label _statTotalObjectCount;
         private Label _statTotalTriangleCount;
         private Label _statTotalVertexCount;
-
 
         [MenuItem("Oxblood/Tools")]
         public static void ShowWindow()
@@ -47,30 +50,37 @@ namespace Oxblood.editor
             toggle.value = _enableMoveToMousePosition;
             toggle.RegisterValueChangedCallback(evt => _enableMoveToMousePosition = evt.newValue);
 
-            //FEATURE: Select objects by component
-            _selectObjectsByComponentButton = rootVisualElement.Q<Button>("_selectObjectsByTypeButton");
-
             //FEATURE Select objects by layer
             _selectObjectsByLayerButton = rootVisualElement.Q<Button>("_selectObjectsByLayerButton");
-
-            // Populate associated dropdown with the projects layers (need to do this if a new layer gets added?).
-            _layerDropdown = rootVisualElement.Q<DropdownField>("layerDropdown");
+            _layerDropdown = rootVisualElement.Q<DropdownField>("_layerDropdown");
             _layerDropdown.choices = UnityEditorInternal.InternalEditorUtility.layers.ToList();
             _layerDropdown.value = _layerDropdown.choices[0];
+            _selectObjectsByLayerButton.clicked += SelectObjectsByLayer;
 
-            //Display and refresh scene stats
+            //FEATURE Select objects by tag
+            _selectObjectsByTagButton = rootVisualElement.Q<Button>("_selectObjectsByTagButton");
+            _tagDropdown = rootVisualElement.Q<DropdownField>("_tagDropdown");
+            _tagDropdown.choices = UnityEditorInternal.InternalEditorUtility.tags.ToList();
+            _tagDropdown.value = _tagDropdown.choices[0];
+            _selectObjectsByTagButton.clicked += SelectObjectsByTag;
+
+            //FEATURE Select object by component
+            _componentSearchField = rootVisualElement.Q<ToolbarPopupSearchField>("_componentSearchField");
+            _selectObjectsByComponentButton = rootVisualElement.Q<Button>("_selectObjectsByComponentButton");
+            _selectObjectsByComponentButton.clicked += SelectObjectsByComponent;
+
+
+            //FEATURE Display and refresh scene stats
             _statRefreshBar = rootVisualElement.Q<ProgressBar>("_statRefreshBar");
             _refreshStatsButton = rootVisualElement.Q<Button>("_refreshStatsButton");
             _statTotalObjectCount = rootVisualElement.Q<Label>("_statTotalObjectCount");
             _statTotalTriangleCount = rootVisualElement.Q<Label>("_statTotalTriangleCount");
             _statTotalVertexCount = rootVisualElement.Q<Label>("_statTotalVertexCount");
+            _refreshStatsButton.clicked += RefreshStats;
 
 
             //Subscribe to events
             SceneView.duringSceneGui += OnSceneGUI;
-            _selectObjectsByComponentButton.clicked += SelectObjectsWithComponent;
-            _selectObjectsByLayerButton.clicked += SelectObjectsByLayer;
-            _refreshStatsButton.clicked += RefreshStats;
         }
 
         private void OnDisable()
@@ -78,8 +88,9 @@ namespace Oxblood.editor
             EditorPrefs.SetBool("EnableMoveToMousePosition", _enableMoveToMousePosition);
 
             SceneView.duringSceneGui -= OnSceneGUI;
-            _selectObjectsByComponentButton.clicked -= SelectObjectsWithComponent;
+            _selectObjectsByComponentButton.clicked -= SelectObjectsByComponent;
             _selectObjectsByLayerButton.clicked -= SelectObjectsByLayer;
+            _selectObjectsByTagButton.clicked -= SelectObjectsByTag;
             _refreshStatsButton.clicked -= RefreshStats;
         }
 
@@ -106,11 +117,9 @@ namespace Oxblood.editor
             }
         }
 
-        private static void SelectObjectsWithComponent()
+        private static void SelectObjectsByComponent()
         {
-            Object[] objectsWithComponent = FindObjectsByType<Object>(FindObjectsSortMode.None);
-
-            Selection.objects = objectsWithComponent;
+            Debug.Log("Not yet implemented");
         }
 
         private void SelectObjectsByLayer()
@@ -123,6 +132,17 @@ namespace Oxblood.editor
 
             // Perform the actual selection
             Selection.objects = objectsInLayer;
+        }
+
+        private void SelectObjectsByTag()
+        {
+            string tagName = _tagDropdown.value;
+
+            GameObject[] allObjects = GameObject.FindGameObjectsWithTag(tagName);
+            Object[] objectsWithTag = allObjects.Where(obj => obj.CompareTag(tagName)).ToArray<Object>();
+
+            // Perform the actual selection
+            Selection.objects = objectsWithTag;
         }
 
         private void RefreshStats()
@@ -143,7 +163,7 @@ namespace Oxblood.editor
                 {
                     //add to total object count
                     totalObjects += CountAllChildren(root.transform);
-                    //Get all the triangeles in each mesh by grabbing attached mesh filters
+                    //Get all the triangeles in each mesh by grabbing attached mesh filters (extend this to skiined meshes at some point)
                     MeshFilter[] meshFilters = root.GetComponentsInChildren<MeshFilter>(true);
                     foreach (MeshFilter mf in meshFilters)
                     {
@@ -180,8 +200,8 @@ namespace Oxblood.editor
         void TerrainTriCount()
         {
             int totalTriangles = 0;
-            
-            Terrain[] terrains = GameObject.FindObjectsOfType<Terrain>();
+
+            Terrain[] terrains = GameObject.FindObjectsByType<Terrain>(FindObjectsSortMode.None);
             foreach (Terrain terrain in terrains)
             {
                 TerrainData data = terrain.terrainData;

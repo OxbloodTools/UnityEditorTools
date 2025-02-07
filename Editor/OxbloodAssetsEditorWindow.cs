@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
@@ -13,6 +14,7 @@ namespace Oxblood.editor
         private VisualElement _imageContainer;
         private AssetGrabber _assetGrabber;
         private Label _readMeLabel;
+        private Slider _galleryItemSlider;
 
         private static Texture2D _tabIcon;
 
@@ -35,13 +37,19 @@ namespace Oxblood.editor
             StyleSheet styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(StaticData.UiComponentsPath + "OxbloodStyle.uss");
             rootVisualElement.styleSheets.Add(styleSheet);
 
+            _galleryItemSlider = rootVisualElement.Q<Slider>("_galleryItemSlider");
+            _galleryItemSlider.RegisterValueChangedCallback(evt => UpdateGalleryItemsPadding(evt.newValue));
+            _galleryItemSlider.highValue = 90;
+            _galleryItemSlider.lowValue = 30;
+            _galleryItemSlider.value = 55;
+
             _refreshLibrary = rootVisualElement.Q<Button>("_refreshLibrary");
             _refreshLibrary.clicked += RebuildLibrary;
             _refreshLibraryFull = rootVisualElement.Q<Button>("_refreshLibraryFull");
             _refreshLibraryFull.clicked += RebuildLibraryFull;
 
             _imageContainer = rootVisualElement.Q<VisualElement>("_galleryWindow");
-            
+
             _readMeLabel = rootVisualElement.Q<Label>("_readMeLabel");
             _readMeLabel.RegisterCallback<ClickEvent>(OpenReadMe);
 
@@ -89,6 +97,21 @@ namespace Oxblood.editor
                     }
                 };
                 content.AddToClassList("content-container");
+                
+
+                
+                
+                // Set initial padding from slider
+                float currentPadding = _galleryItemSlider.value;
+                container.style.paddingTop = currentPadding;
+                container.style.paddingRight = currentPadding;
+                container.style.paddingBottom = currentPadding;
+                container.style.paddingLeft = currentPadding;
+               
+                
+                
+                
+                
 
                 //extrapolate prefab GUID by using the filename of the associated image
                 string objName = TrimUntilLastUnderscore(Path.GetFileNameWithoutExtension(AssetDatabase.GUIDToAssetPath(Path.GetFileNameWithoutExtension(path)))); //frankly ridiculous stringification
@@ -103,6 +126,18 @@ namespace Oxblood.editor
                 container.Add(nameLabel);
                 container.tooltip = Path.GetFileNameWithoutExtension(AssetDatabase.GUIDToAssetPath(Path.GetFileNameWithoutExtension(path)));
                 _imageContainer.Add(container);
+            }
+        }
+
+        private void UpdateGalleryItemsPadding(float paddingValue) //Potentially MASSIVE chokepoint here.  Large libraries might have a threshold of crashyness.
+        {
+            List<VisualElement> galleryItems = _imageContainer.Query<VisualElement>(className: "galleryItem").ToList();
+            foreach (var item in galleryItems)
+            {
+                item.style.paddingTop = paddingValue;
+                item.style.paddingRight = paddingValue;
+                item.style.paddingBottom = paddingValue;
+                item.style.paddingLeft = paddingValue;
             }
         }
 
